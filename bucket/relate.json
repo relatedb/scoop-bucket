@@ -1,0 +1,35 @@
+{
+    "version": "1.2.0",
+    "description": "Relate: embedded openCypher graph database with a single-binary CLI",
+    "homepage": "https://relatedb.ai",
+    "license": "Apache-2.0",
+    "architecture": {
+        "64bit": {
+            "url": "https://github.com/relatedb/relate/releases/download/v1.2.0/relate-windows-amd64.exe",
+            "hash": "sha256:b04051a5c1fa2ee22b15816e05b40557dd6e56cfe268ec3088da94eb9625d071"
+        }
+    },
+    "bin": [
+        [
+            "relate-windows-amd64.exe",
+            "relate"
+        ]
+    ],
+    "post_install": "[IO.File]::WriteAllText((Join-Path $dir '.relate-package-managed'), '{\"manager\":\"scoop\",\"upgrade\":\"scoop update relate\"}')",
+    "checkver": {
+        "url": "https://relatedb.ai/releases.json",
+        "jsonpath": "$.latest.tag",
+        "regex": "v(\\d+\\.\\d+\\.\\d+)"
+    },
+    "autoupdate": {
+        "architecture": {
+            "64bit": {
+                "url": "https://github.com/relatedb/relate/releases/download/v$version/relate-windows-amd64.exe",
+                "hash": {
+                    "url": "$baseurl/assets.json",
+                    "jsonpath": "$['relate-windows-amd64.exe'].sha256"
+                }
+            }
+        }
+    }
+}
